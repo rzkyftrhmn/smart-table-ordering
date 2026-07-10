@@ -17,7 +17,7 @@ class ShiftController extends Controller
                 $query->where('name', 'like', "%{$search}%");
             })
             ->latest()
-            ->paginate(10)
+            ->paginate(5)
             ->withQueryString();
 
         return view('admin.shifts.index', compact('shifts', 'search'));

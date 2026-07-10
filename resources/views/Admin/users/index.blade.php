@@ -1,137 +1,86 @@
 @extends('layouts.admin')
-
-@push('styles')
-<style>
-    .sto-admin-page { padding: 2rem 1.5rem; max-width: 100%; overflow-x: hidden; }
-    .sto-page-head { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
-    .sto-title-wrap { display: flex; align-items: center; gap: 12px; min-width: 0; }
-    .sto-title-icon { width: 42px; height: 42px; border-radius: 10px; background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; display: flex; align-items: center; justify-content: center; flex: 0 0 auto; }
-    .sto-title-icon i { font-size: 20px; }
-    .sto-page-title { font-size: 22px; font-weight: 700; color: #111827; margin: 0 0 4px; }
-    .sto-page-subtitle { color: #6b7280; font-size: 13px; margin: 0; }
-    .sto-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; box-shadow: 0 4px 12px rgba(15,23,42,.04); overflow: hidden; }
-    .sto-card-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem; border-bottom: 1px solid #f3f4f6; }
-    .sto-search { position: relative; width: min(100%, 360px); }
-    .sto-search i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af; font-size: 14px; }
-    .sto-input { width: 100%; height: 38px; background: #f9fafb; border: 1px solid #d1d5db; border-radius: 8px; padding: 0 12px 0 34px; font-size: 13px; color: #111827; outline: none; }
-    .sto-input:focus { background: #fff; border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
-    .sto-table-wrap { overflow-x: auto; }
-    .sto-table { width: 100%; margin: 0; color: #111827; }
-    .sto-table th { color: #6b7280; font-size: 11px; text-transform: uppercase; letter-spacing: .05em; font-weight: 700; background: #f9fafb; border-bottom: 1px solid #e5e7eb; white-space: nowrap; }
-    .sto-table td { vertical-align: middle; border-bottom: 1px solid #f3f4f6; font-size: 13px; }
-    .sto-user-name { font-weight: 700; color: #111827; }
-    .sto-muted { color: #9ca3af; }
-    .sto-badge { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 5px 10px; font-size: 12px; font-weight: 700; }
-    .sto-badge.active { background: #dcfce7; color: #166534; }
-    .sto-badge.inactive { background: #fee2e2; color: #991b1b; }
-    .sto-badge.role { background: #eff6ff; color: #1e40af; text-transform: capitalize; }
-    .sto-actions { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
-    .sto-empty { padding: 2.5rem 1rem; text-align: center; color: #6b7280; }
-    .sto-alert { border-radius: 10px; border: 1px solid transparent; padding: .85rem 1rem; margin-bottom: 1rem; font-size: 13px; font-weight: 600; }
-    .sto-alert.success { background: #dcfce7; border-color: #bbf7d0; color: #166534; }
-    .sto-alert.error { background: #fee2e2; border-color: #fecaca; color: #991b1b; }
-    .sto-pagination { padding: 1rem; border-top: 1px solid #f3f4f6; }
-    @media (max-width: 767.98px) {
-        .sto-admin-page { padding: 1rem .75rem; }
-        .sto-page-head, .sto-card-toolbar { align-items: stretch; flex-direction: column; }
-        .sto-search { width: 100%; }
-        .sto-page-head .btn { width: 100%; }
-    }
-</style>
-@endpush
-
 @section('content')
 <div class="side-app">
-    <div class="sto-admin-page">
-        <div class="sto-page-head">
-            <div class="sto-title-wrap">
-                <div class="sto-title-icon"><i class="fe fe-users"></i></div>
-                <div>
-                    <h1 class="sto-page-title">User Management</h1>
-                    <p class="sto-page-subtitle">Kelola akun staf yang dapat masuk ke sistem.</p>
+    <div class="row">
+        <div class="col-12 col-sm-12">
+            <div class="card mt-5">
+                <div class="card-header">
+                    <h3 class="card-title mb-0">User Management</h3>
+                    <div class="ms-auto pageheader-btn">
+                        <a href="{{ route('users.create') }}" class="btn btn-primary btn-icon text-white me-2">
+                            <span>
+                                <i class="fe fe-plus"></i>
+                            </span> Add User
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <a href="{{ route('users.create') }}" class="btn btn-primary btn-icon text-white">
-                <span><i class="fe fe-plus"></i></span> Tambah User
-            </a>
-        </div>
 
-        <div class="sto-card">
-            <div class="sto-card-toolbar">
-                <form method="GET" action="{{ route('users.index') }}" class="sto-search">
-                    <i class="fe fe-search"></i>
-                    <input type="search" name="search" value="{{ $search }}" class="sto-input" placeholder="Cari nama atau email">
-                </form>
-                @if($search)
-                    <a href="{{ route('users.index') }}" class="btn btn-light btn-sm">Reset</a>
-                @endif
-            </div>
-
-            <div class="sto-table-wrap">
-                <table class="table sto-table text-nowrap mb-0">
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Shift</th>
-                            <th>Status</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($users as $user)
+                <div class="card-body">
+                    <form method="GET" class="mb-3 d-flex justify-content-end">
+                        <div class="input-group" style="max-width: 350px;">
+                            <input type="text" name="search" class="form-control" 
+                                placeholder="Search By Name | Username | Email..." value="{{ $search }}">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
+                    <div class="table-responsive">
+                        <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
+                            <thead class="border-top">
                             <tr>
-                                <td>
-                                    <div class="sto-user-name">{{ $user->name }}</div>
-                                </td>
-                                <td>{{ $user->email ?: '-' }}</td>
-                                <td><span class="sto-badge role">{{ $user->role }}</span></td>
-                                <td>
-                                    @if($user->shift)
-                                        {{ $user->shift->name }} ({{ substr($user->shift->start_time, 0, 5) }} - {{ substr($user->shift->end_time, 0, 5) }})
-                                    @else
-                                        <span class="sto-muted">-</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    @if($user->is_active)
-                                        <span class="sto-badge active">Aktif</span>
-                                    @else
-                                        <span class="sto-badge inactive">Nonaktif</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <div class="sto-actions">
-                                        <a href="{{ route('users.edit', $user) }}" class="btn btn-primary btn-sm">
-                                            <i class="fe fe-edit-2"></i> Edit
-                                        </a>
-                                        <form method="POST" action="{{ route('users.destroy', $user) }}" class="mb-0 delete-form" data-type="user {{ $user->name }}">
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Shift</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @forelse($users as $user)
+                                <tr>
+                                    <td>{{ $users->firstItem() + $loop->index }}</td>
+                                    <td>{{ $user->name }}</td>
+                                    <td>{{ $user->email ?: '-' }}</td>
+                                    <td><span class="badge bg-primary">{{ $user->role }}</span></td>
+                                    <td>
+                                        @if($user->shift)
+                                            {{ $user->shift->name }} ({{ substr($user->shift->start_time, 0, 5) }} - {{ substr($user->shift->end_time, 0, 5) }})
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($user->is_active)
+                                            <span class="badge bg-success">Aktif</span>
+                                        @else
+                                            <span class="badge bg-secondary">Nonaktif</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('users.edit', $user) }}" class="btn btn-primary btn-sm rounded-11 me-2" data-bs-toggle="tooltip" data-bs-original-title="Edit"><i><svg class="table-edit" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="16"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM5.92 19H5v-.92l9.06-9.06.92.92L5.92 19zM20.71 5.63l-2.34-2.34c-.2-.2-.45-.29-.71-.29s-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41z"/></svg></i></a>
+                                        <form action="{{ route('users.destroy', $user) }}" method="POST" class="d-inline delete-form" data-type="user {{ $user->name }}">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">
-                                                <i class="fe fe-trash-2"></i> Hapus
-                                            </button>
+                                            <button type="submit" class="btn btn-danger btn-sm rounded-11" data-bs-toggle="tooltip" data-bs-original-title="Delete"><i><svg class="table-delete" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 24 24" width="16"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-4.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/></svg></i></button>
                                         </form>
-                                    </div>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6">
-                                    <div class="sto-empty">Belum ada user yang cocok.</div>
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-
-            @if($users->hasPages())
-                <div class="sto-pagination">
-                    {{ $users->links('pagination::bootstrap-5') }}
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="6" class="text-center">Belum ada user yang cocok.</td>
+                                </tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                    @if($users->hasPages())
+                        <div class="mt-3">
+                            {{ $users->links('pagination::bootstrap-5') }}
+                        </div>
+                    @endif
                 </div>
-            @endif
+            </div>
         </div>
     </div>
 </div>

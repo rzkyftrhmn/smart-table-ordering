@@ -6,6 +6,7 @@ use App\Http\Middleware\EnsureKasirShiftIsActive;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\EnsureLocationVerified;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -23,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role' => RoleMiddleware::class,
             'redirect.role' => RedirectByRole::class,
             'shift.active' => EnsureKasirShiftIsActive::class,
+            'location.verified' => EnsureLocationVerified::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

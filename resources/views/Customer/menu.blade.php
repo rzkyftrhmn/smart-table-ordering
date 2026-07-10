@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/brand/logoMeja.png') }}">
     <link rel="stylesheet" href="{{ asset('customer/assets/css/style.css') }}">
 </head>
 
@@ -40,7 +40,7 @@
             <div class="col-12">
                 <div class="card-tempat">
                     <div class="card-info">
-                        <h4>Coffee Shop Coffee Coffeean</h4>
+                        <h4>Meja Terakhir</h4>
                         <p>Open Today, <span>8:00 AM - 10:00 PM</span></p>
                         <div class="store-meta-row">
                             <span class="store-chip">

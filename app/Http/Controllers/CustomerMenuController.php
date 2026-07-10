@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use App\Models\RestaurantLocation;
 
 class CustomerMenuController extends Controller
 {
@@ -25,6 +26,60 @@ class CustomerMenuController extends Controller
     private function getTableByToken(string $token): DiningTable
     {
         return DiningTable::where('qr_token', $token)->firstOrFail();
+    }
+
+    // helper session key
+    private function locationSessionKey(): string
+    {
+        return 'location_verified';
+    }
+
+    /**
+     * Halaman yang minta izin lokasi ke guest sebelum bisa akses menu.
+     */
+    public function checkLocation(string $token)
+    {
+        $this->getTableByToken($token); 
+
+        // kalau udah pernah verified di session ini, langsung lempar ke menu
+        if (session()->get($this->locationSessionKey())) {
+            return redirect()->route('customer-menu.index', $token);
+        }
+
+        return view('customer.location-check', compact('token'));
+    }
+
+    /**
+     * Endpoint yang dipanggil JS setelah browser dapat lat/long guest.
+     */
+    public function verifyLocation(Request $request, string $token)
+    {
+        $this->getTableByToken($token);
+
+        $validated = $request->validate([
+            'latitude' => ['required', 'numeric', 'between:-90,90'],
+            'longitude' => ['required', 'numeric', 'between:-180,180'],
+        ]);
+
+        $restaurantLocation = RestaurantLocation::current();
+
+        $isWithin = $restaurantLocation->isWithinRadius(
+            $validated['latitude'],
+            $validated['longitude']
+        );
+
+        if (! $isWithin) {
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+
+        session()->put($this->locationSessionKey(), true);
+
+        return response()->json([
+            'success' => true,
+            'redirect' => route('customer-menu.index', $token),
+        ]);
     }
 
     /**
@@ -75,6 +130,10 @@ class CustomerMenuController extends Controller
      */
     public function index(string $token)
     {
+
+        if (!session()->get($this->locationSessionKey())) {
+            return redirect()->route('customer-menu.check', $token);
+        }
         $table = $this->getTableByToken($token);
 
         $categories = Category::with(['menuItems' => function ($query) {

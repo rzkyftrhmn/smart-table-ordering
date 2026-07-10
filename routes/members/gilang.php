@@ -6,6 +6,13 @@ use App\Http\Controllers\CustomerMenuController;
 Route::prefix('customer-menu/{token}')
     ->name('customer-menu.')
     ->group(function () {
+
+        Route::get('/location', [CustomerMenuController::class, 'checkLocation'])
+            ->name('check');
+
+        Route::post('/location/verify', [CustomerMenuController::class, 'verifyLocation'])
+            ->name('verify');
+
         Route::get('/', [CustomerMenuController::class, 'index'])
             ->name('index');
 

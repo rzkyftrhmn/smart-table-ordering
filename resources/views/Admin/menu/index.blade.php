@@ -21,8 +21,15 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    <form method="GET" class="mb-3 d-flex justify-content-end">
+                        <div class="input-group" style="max-width: 350px;">
+                            <input type="text" name="search" class="form-control" 
+                                placeholder="Search By Menu Name..." value="{{ $search }}">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
                     <div class="table-responsive">
-                        <table id="data-table" class="table table-bordered text-nowrap mb-0">
+                        <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
                             <thead class="border-top">
                             <tr>
                                 <th>No</th>
@@ -40,7 +47,7 @@
                             <tbody>
                                 @foreach ($menuItems as $menuItem)
                                 <tr>
-                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $menuItems->firstItem() + $loop->index }}</td>
                                     <td>
                                         @if ($menuItem->image_url)
                                             @php
@@ -163,6 +170,11 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        @if($menuItems->hasPages())
+                            <div class="mt-3">
+                                {{ $menuItems->links('pagination::bootstrap-5') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

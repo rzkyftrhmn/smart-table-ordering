@@ -1,5 +1,5 @@
 <!-- FAVICON -->
-<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/brand/favicon.ico') }}" />
+<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/images/brand/logoMeja1.png') }}" />
 
 <!-- TITLE -->
 <title>Admin - Caffee</title>
@@ -38,6 +38,22 @@
 <link id="theme" rel="stylesheet" type="text/css" media="all" href="{{ asset('assets/colors/color1.css') }}" />
 
 <style>
+/* style map location */
+#map {
+    position: relative;
+    z-index: 0; 
+}
+
+#map .leaflet-pane,
+#map .leaflet-top,
+#map .leaflet-bottom {
+    z-index: 1 !important;
+}
+
+#map .leaflet-control {
+    z-index: 2 !important;
+}
+
 .tm-admin-page-shell,
 .tm-admin-page-shell .row,
 .tm-admin-page-shell [class*="col-"],

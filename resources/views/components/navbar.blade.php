@@ -9,10 +9,8 @@
         <div class="d-flex">
             <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a><!-- sidebar-toggle-->
             <a class="header-brand1 d-flex d-md-none" href="index.html">
-                <img src="{{ asset('assets/images/brand/logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
-                <img src="{{ asset('assets/images/brand/logo-1.png') }}" class="header-brand-img toggle-logo" alt="logo">
-                <img src="{{ asset('assets/images/brand/logo-2.png') }}" class="header-brand-img light-logo" alt="logo">
-                <img src="{{ asset('assets/images/brand/logo-3.png') }}" class="header-brand-img light-logo1" alt="logo">
+                <img src="{{ asset('assets/images/brand/logoMeja1.png') }}" class="header-brand-img light-logo" alt="logo">
+                <img src="{{ asset('assets/images/brand/logoMejaTerakhir1.png') }}" class="header-brand-img light-logo1" alt="logo">
             </a>
             <div class="d-flex order-lg-2 ms-auto header-right-icons">
                 @include('components.notification-bell')

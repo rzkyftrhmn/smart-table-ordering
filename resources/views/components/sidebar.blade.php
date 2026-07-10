@@ -14,10 +14,8 @@
 <aside class="app-sidebar">
     <div class="side-header">
         <a class="header-brand1" href="{{ route('dashboard') }}">
-            <img src="{{ asset('assets/images/brand/logo.png') }}" class="header-brand-img desktop-logo" alt="logo">
-            <img src="{{ asset('assets/images/brand/logo-1.png') }}" class="header-brand-img toggle-logo" alt="logo">
-            <img src="{{ asset('assets/images/brand/logo-2.png') }}" class="header-brand-img light-logo" alt="logo">
-            <img src="{{ asset('assets/images/brand/logo-3.png') }}" class="header-brand-img light-logo1" alt="logo">
+            <img src="{{ asset('assets/images/brand/logoMeja1.png') }}" class="header-brand-img light-logo" alt="logo">
+            <img src="{{ asset('assets/images/brand/logoMejaTerakhir1.png') }}" class="header-brand-img light-logo1" alt="logo">
         </a></div>
     <ul class="side-menu">
         <li><h3>Main</h3></li>
@@ -56,6 +54,10 @@
         </li>
         <li>
             <a class="side-menu__item {{ $isFinancialReportActive ? 'active' : '' }}" href="{{ route('admin.reports.financial') }}"><i class="side-menu__icon fe fe-bar-chart-2"></i><span class="side-menu__label">Financial Report</span></a>
+        </li>
+        <li><h3>LOCATION</h3></li>
+        <li>
+            <a class="side-menu__item {{ request()->routeIs('admin.restaurant-location.*') ? 'active-class-lo' : '' }}" href="{{ route('admin.restaurant-location.edit') }}"><i class="side-menu__icon fe fe-map-pin"></i><span class="side-menu__label">Restaurant Location</span></a>
         </li>
     </ul>
 </aside>

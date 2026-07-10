@@ -13,6 +13,7 @@ use App\Http\Controllers\KitchenController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Owner\OwnerDashboardController;
 use App\Http\Controllers\Owner\OwnerReportExportController;
+use App\Http\Controllers\Admin\RestaurantLocationController;
 use App\Models\Category;
 use App\Models\DiningTable;
 use App\Models\KitchenQueue;
@@ -176,6 +177,12 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/admin/reports/financial/realtime', [FinancialReportController::class, 'realtime'])
             ->name('admin.reports.financial.realtime');
+
+        // Route untuk setting lokasi resto
+        Route::get('/restaurant-location', [RestaurantLocationController::class, 'edit'])
+            ->name('admin.restaurant-location.edit');
+        Route::put('/restaurant-location', [RestaurantLocationController::class, 'update'])
+            ->name('admin.restaurant-location.update');
     });
 
     /*

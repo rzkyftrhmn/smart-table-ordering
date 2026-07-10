@@ -12,13 +12,18 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class MenuController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->search;
         $menuItems = MenuItem::with(['category', 'menuDiscounts.discount'])
+            ->when($search, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
             ->latest()
-            ->paginate(10);
+            ->paginate(10)
+            ->withQueryString();
 
-        return view('admin.menu.index', compact('menuItems'));
+        return view('admin.menu.index', compact('menuItems', 'search'));
     }
 
     public function create()

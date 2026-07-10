@@ -16,8 +16,15 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    <form method="GET" class="mb-3 d-flex justify-content-end">
+                        <div class="input-group" style="max-width: 350px;">
+                            <input type="text" name="search" class="form-control" 
+                                placeholder="Search By Category | Name..." value="{{ $search }}">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
                     <div class="table-responsive">
-                        <table id="data-table" class="table table-bordered text-nowrap mb-0">
+                        <table class="table border text-nowrap text-md-nowrap table-bordered mg-b-0">
                             <thead class="border-top">
                             <tr>
                                 <th>No</th>
@@ -30,7 +37,7 @@
                             @foreach($categories as $category)
                                 <tr>
 
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $categories->firstItem() + $loop->index }}</td>
 
                                 <td>{{ $category->name }}</td>
 
@@ -51,6 +58,11 @@
                             @endforeach
                             </tbody>
                         </table>
+                        @if($categories->hasPages())
+                            <div class="mt-3">
+                                {{ $categories->links('pagination::bootstrap-5') }}
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
