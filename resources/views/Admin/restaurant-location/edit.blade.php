@@ -6,24 +6,24 @@
 
             <div class="card mt-3">
                 <div class="card-header">
-                    <h3 class="card-title mb-0">Pengaturan Lokasi Restaurant</h3>
+                    <h3 class="card-title mb-0">Restaurant Location Settings</h3>
                 </div>
                 <div class="card-body">
 
                     <p class="text-muted">
-                        Klik pada peta atau geser marker untuk menentukan titik lokasi restaurant.
-                        Customer yang scan QR di luar radius ini tidak akan bisa mengakses menu.
+                        Click on the map or drag the marker to set the restaurant's location point.
+                        Customers who scan the QR code outside this radius won't be able to access the menu.
                     </p>
 
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         @if ($location->latitude == 0 && $location->longitude == 0)
-                            <span class="badge bg-warning text-dark">Lokasi belum diatur</span>
+                            <span class="badge bg-warning text-dark">Location not set</span>
                         @else
-                            <span class="badge bg-success">Lokasi tersimpan</span>
+                            <span class="badge bg-success">Location saved</span>
                         @endif
 
                         <button type="button" id="btnUseCurrentLocation" class="btn btn-sm btn-outline-primary">
-                            <i class="fa fa-location-arrow"></i> Gunakan Lokasi Saat Ini
+                            <i class="fa fa-location-arrow"></i> Use Current Location
                         </button>
                     </div>
 
@@ -70,7 +70,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label>Radius yang diizinkan (meter)</label>
+                            <label>Allowed radius (meters)</label>
                             <input
                                 type="number"
                                 id="radius_meters_input"
@@ -86,7 +86,7 @@
                         </div>
 
                         <button class="btn btn-primary">
-                            Simpan Lokasi
+                            Save Location
                         </button>
 
                     </form>
