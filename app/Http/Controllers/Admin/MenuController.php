@@ -23,7 +23,7 @@ class MenuController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.menu.index', compact('menuItems', 'search'));
+        return view('Admin.menu.index', compact('menuItems', 'search'));
     }
 
     public function create()

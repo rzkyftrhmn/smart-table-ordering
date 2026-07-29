@@ -18,7 +18,7 @@ class RestaurantLocationController extends Controller
     {
         $location = RestaurantLocation::current();
 
-        return view('admin.restaurant-location.edit', compact('location'));
+        return view('Admin.restaurant-location.edit', compact('location'));
     }
 
     /**

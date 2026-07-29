@@ -23,7 +23,7 @@ class CategoryController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.categories.index', compact('categories', 'search'));
+        return view('Admin.categories.index', compact('categories', 'search'));
     }
     /**
      * Show the form for creating a new resource.

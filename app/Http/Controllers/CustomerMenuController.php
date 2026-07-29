@@ -46,7 +46,7 @@ class CustomerMenuController extends Controller
             return redirect()->route('customer-menu.index', $token);
         }
 
-        return view('customer.location-check', compact('token'));
+        return view('Customer.location-check', compact('token'));
     }
 
     /**
@@ -154,7 +154,7 @@ class CustomerMenuController extends Controller
             ->sortByDesc(fn (MenuItem $menuItem) => $menuItem->discountPercentage())
             ->values();
 
-        return view('customer.menu', compact(
+        return view('Customer.menu', compact(
             'table',
             'categories',
             'token',
@@ -188,7 +188,7 @@ class CustomerMenuController extends Controller
         $cart = session()->get($this->cartKey($table), []);
         $cartCount = collect($cart)->sum('quantity');
 
-        return view('customer.search', compact(
+        return view('Customer.search', compact(
             'table',
             'menuItems',
             'keyword',
@@ -213,7 +213,7 @@ class CustomerMenuController extends Controller
         $cartCount = collect($cart)->sum('quantity');
         $clientKey = config('midtrans.client_key');
 
-        return view('customer.cart', compact(
+        return view('Customer.cart', compact(
             'table',
             'cart',
             'subtotal',
@@ -590,7 +590,7 @@ class CustomerMenuController extends Controller
         $statusPayload = $this->customerOrderStatus($order);
 
         return view(
-            'customer.order-summary',
+            'Customer.order-summary',
             compact(
                 'order',
                 'table',

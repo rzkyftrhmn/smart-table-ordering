@@ -20,12 +20,12 @@ class ShiftController extends Controller
             ->paginate(5)
             ->withQueryString();
 
-        return view('admin.shifts.index', compact('shifts', 'search'));
+        return view('Admin.shifts.index', compact('shifts', 'search'));
     }
 
     public function create()
     {
-        return view('admin.shifts.create');
+        return view('Admin.shifts.create');
     }
 
     public function store(Request $request)
@@ -50,7 +50,7 @@ class ShiftController extends Controller
 
     public function edit(Shift $shift)
     {
-        return view('admin.shifts.edit', compact('shift'));
+        return view('Admin.shifts.edit', compact('shift'));
     }
 
     public function update(Request $request, Shift $shift)

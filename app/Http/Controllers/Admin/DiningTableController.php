@@ -13,7 +13,7 @@ class DiningTableController extends Controller
     {       
         $tables = DiningTable::orderBy('table_number', 'asc')->get(); 
         
-        return view('admin.diningtable.index', compact('tables'));
+        return view('Admin.diningtable.index', compact('tables'));
     }
 
     // 2. Simpan Data Baru

@@ -28,14 +28,14 @@ class UserController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.users.index', compact('users', 'search'));
+        return view('Admin.users.index', compact('users', 'search'));
     }
 
     public function create()
     {
         $shifts = Shift::orderBy('start_time')->get();
 
-        return view('admin.users.create', compact('shifts'));
+        return view('Admin.users.create', compact('shifts'));
     }
 
     public function store(Request $request)
@@ -69,7 +69,7 @@ class UserController extends Controller
     {
         $shifts = Shift::orderBy('start_time')->get();
 
-        return view('admin.users.edit', compact('user', 'shifts'));
+        return view('Admin.users.edit', compact('user', 'shifts'));
     }
 
     public function update(Request $request, User $user)
